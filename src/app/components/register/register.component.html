@@ -1,0 +1,23 @@
+<div class="container mt-3">
+        <h3>Please Register</h3>
+      
+        <form role="form">
+          <div class="row">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input name="username" type="text" class="form-control" [(ngModel)]="register.username"/>
+            </div>
+          </div>
+      
+          <div class="row">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input name="password" type="text" class="form-control input-normal" [(ngModel)]="register.password"/>
+            </div>
+          </div>
+          
+          <div class="row">
+            <button type="submit" class="btn btn-default" (click)="registerFn()">Register</button>
+          </div>
+        </form>
+      </div>

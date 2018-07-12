@@ -1,0 +1,14 @@
+<div class="container mt-3">
+  <h3>New Post</h3>
+    <form>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input name="title" type="text" [(ngModel)]="post.title" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input name="description" type="textarea" [(ngModel)]="post.description" class="form-control">
+      </div>
+      <button type="submit" class="btn btn-default" (click)="postFn()">Post</button>
+    </form>
+</div>
