@@ -7,20 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  loggedIn = true;
+  loggedIn = false;
 
   constructor(private loginService:LoginService) { }
 
   ngOnInit() {
+    if(this.loginService.checkUserStatus()){
+      this.loggedIn = true;
+    }
     this.loginService.status.subscribe(status=>{
-      console.log(status);
       this.loggedIn=status
     });
   }
 
   logout(){
-    sessionStorage.user = {};
-    this.loggedIn = false;
+    sessionStorage.clear();
+    this.loginService.notifyNavbar(false);
   }
 
 }

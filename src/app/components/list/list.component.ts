@@ -13,6 +13,7 @@ export class ListComponent implements OnInit {
 
   ngOnInit() {
     this.postService.getPosts().subscribe(posts=>{
+      console.log(posts);
       this.posts = posts;
     })
   }

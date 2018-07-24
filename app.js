@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const schema = mongoose.Schema;
 const bodyParser = require("body-parser");
+var jwt = require('jsonwebtoken');
 
 //body-parser stuff
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -54,12 +55,17 @@ app.post('/register', (req, res) => {
 })
 
 app.post('/login', (req, res) => {
+    var token = jwt.sign({"uname" : req.body.username} , 'marlabs-secret-key' , {
+        expiresIn: '1h'
+      });
+
     User.findOne({
         username: req.body.username
     }).then(user => {
         if (user.username == req.body.username && user.password == req.body.password) {
             res.send({
                 loggedIn: true,
+                token : token,
                 user:user
             });
         }
@@ -70,6 +76,22 @@ app.post('/login', (req, res) => {
         }
     })
 })
+
+app.use(function(req,res,next){
+    var token = req.body.authToken || req.query.authToken || req.headers['authtoken'];
+    jwt.verify(token, 'marlabs-secret-key', function(err, decoded){
+        if(err){
+          res.send({
+            err: true,
+            msg : "Invalid request"
+          })
+        }
+        else{
+            req.decoded = decoded 
+            next();
+        }
+    });
+  });
 
 app.post('/posts', (req, res) => {
     var newPost = {
@@ -93,15 +115,6 @@ app.get('/posts/:username', (req, res) => {
     })
 
 })
-
-
-
-
-
-
-
-
-
 
 
 app.listen(5000, () => console.log("listening on port 5000"));

@@ -1,6 +1,6 @@
 import { LoginService } from './../../services/login/login.service';
 import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,24 +9,25 @@ import {Router} from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  login:any = {};
+  login: any = {};
 
-  constructor(private loginService:LoginService,  private router : Router) { }
+  constructor(private loginService: LoginService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  loginFn(){
-    this.loginService.login(this.login).subscribe((res:any)=>{
-      if(res.loggedIn){
+  loginFn() {
+    this.loginService.login(this.login).subscribe((res: any) => {
+      if (res.loggedIn) {
         sessionStorage.user = res.user;
+        sessionStorage.token = res.token;
         this.router.navigateByUrl('/home');
         this.loginService.notifyNavbar(res.loggedIn);
       }
-      else{
+      else {
         this.loginService.notifyNavbar(res.loggedIn);
       }
-      
-  });
-}
+
+    });
+  }
 }

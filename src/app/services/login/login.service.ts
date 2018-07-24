@@ -27,6 +27,10 @@ export class LoginService {
     this.status.next(loggedIn);
   }
 
+  checkUserStatus(){
+    return sessionStorage.token;
+  }
+
   getPosts(){
     return this.http.get(`http://localhost:5000/posts/${sessionStorage.user.username}`);
   }
